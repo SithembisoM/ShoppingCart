@@ -72,6 +72,29 @@
         "frameworkReferences": [
           "Microsoft.AspNetCore.App"
         ]
+      },
+      "ShoppingCart.Model/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/ShoppingCart.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ShoppingCart.Model.dll": {}
+        }
+      },
+      "ShoppingCart.Service/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "ShoppingCart.Model": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ShoppingCart.Service.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ShoppingCart.Service.dll": {}
+        }
       }
     }
   },
@@ -200,10 +223,22 @@
         "swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
+    },
+    "ShoppingCart.Model/1.0.0": {
+      "type": "project",
+      "path": "../ShoppingCart.Model/ShoppingCart.Model.csproj",
+      "msbuildProject": "../ShoppingCart.Model/ShoppingCart.Model.csproj"
+    },
+    "ShoppingCart.Service/1.0.0": {
+      "type": "project",
+      "path": "../ShoppingCart.Service/ShoppingCart.Service.csproj",
+      "msbuildProject": "../ShoppingCart.Service/ShoppingCart.Service.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
+      "ShoppingCart.Model >= 1.0.0",
+      "ShoppingCart.Service >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.2.3"
     ]
   },
@@ -213,9 +248,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCard.Api\\ShoppingCard.Api.csproj",
-      "projectName": "ShoppingCard.Api",
-      "projectPath": "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCard.Api\\ShoppingCard.Api.csproj",
+      "projectUniqueName": "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCard.Api\\ShoppingCart.Api.csproj",
+      "projectName": "ShoppingCart.Api",
+      "projectPath": "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCard.Api\\ShoppingCart.Api.csproj",
       "packagesPath": "C:\\Users\\SithembisoM\\.nuget\\packages\\",
       "outputPath": "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCard.Api\\obj\\",
       "projectStyle": "PackageReference",
@@ -236,7 +271,14 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCart.Model\\ShoppingCart.Model.csproj": {
+              "projectPath": "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCart.Model\\ShoppingCart.Model.csproj"
+            },
+            "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCart.Service\\ShoppingCart.Service.csproj": {
+              "projectPath": "C:\\Dev\\Sandbox\\ShoppingCart\\ShoppingCart\\ShoppingCart.Service\\ShoppingCart.Service.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

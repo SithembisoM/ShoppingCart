@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CartViewModel>
+
+@{
+    ViewData["Title"] = "Shopping Cart";
+}
+
+<h2>Shopping Cart</h2>
+
+    <table class="table table-bordered table-responsive table-hover">
+        <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Product.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Product.Price)</th>
+            <th>@Html.DisplayNameFor(model => model.Quantity)</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (CartViewModel item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Product.Price)</td>
+                <td>
+                    @Html.DropDownListFor(modelItem => item.Quantity, Enumerable.Range(1, 100).Select(s => new SelectListItem
+                         {
+                             Text = s.ToString(),
+                             Value = s.ToString()
+                         }))
+                    @Html.ActionLink("Update Quantity", "UpdateQuantity", "Cart", routeValues: new { basketItemId = item.Product.Id, quantity = item.Quantity }, htmlAttributes: null)
+
+                </td>
+
+                <td>
+                    @Html.ActionLink("Remove from basket", "Remove", "Cart", routeValues: new
+                    {
+                        basketItemId = item.Product.Id
+                    }, htmlAttributes: null)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+<br />
+<a href="../Product/Index">Back to Products</a>
