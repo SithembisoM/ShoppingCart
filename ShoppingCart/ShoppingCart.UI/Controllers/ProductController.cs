@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using ShoppingCart.UI.Models;
-using ShoppingCart.UI.Repositories.Interface;
+using ShoppingCart.UI.Service.Interface;
 
 namespace ShoppingCart.UI.Controllers
 {
   public class ProductController : Controller
   {
-    private readonly IProductRepository _productRepository;
+    private readonly IProductService _productService;
 
-    public ProductController(IProductRepository productRepository)
+    public ProductController(IProductService productService)
     {
-      this._productRepository = productRepository;
+      _productService = productService;
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-      IEnumerable<ProductViewModel> productList = _productRepository.GetProducts();
+      IEnumerable<ProductViewModel> productList = await _productService.GetProductsAsync();
 
       return View(productList);
     }

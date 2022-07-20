@@ -1,6 +1,6 @@
 ﻿namespace ShoppingCart.Model.DTO
 {
-  public class Product
+  public class ProductItem
   {
     public int Id { get; set; }
 

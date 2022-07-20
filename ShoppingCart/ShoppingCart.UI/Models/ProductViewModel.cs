@@ -4,20 +4,10 @@ namespace ShoppingCart.UI.Models
 {
   public class ProductViewModel
   {
-    //public ProductViewModel(
-    //  string id,
-    //  string name,
-    //  string photo)
-    //{
-    //  Id = id;
-    //  Name = name;
-    //  Photo = photo;
-    //}
-
     public ProductViewModel(
-      string id,
+      int id,
       string name,
-      decimal price,
+      int? price,
       string photo)
     {
       Id = id;
@@ -26,12 +16,12 @@ namespace ShoppingCart.UI.Models
       Photo = photo;
     }
 
-    public string Id { get; set; }
+    public int Id { get; set; }
 
     public string Name { get; set; }
 
-    [DisplayFormat(DataFormatString = "{0:C0}")]
-    public decimal Price { get; set; }
+    [DisplayFormat(DataFormatString = "{0:C}")]
+    public int? Price { get; set; }
 
     public string Photo { get; set; }
   }

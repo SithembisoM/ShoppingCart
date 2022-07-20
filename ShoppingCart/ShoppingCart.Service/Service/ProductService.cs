@@ -5,32 +5,12 @@ namespace ShoppingCart.Service.Service
 {
   public class ProductService : IProductService
   {
-    public Task<IList<Product>> GetProductsAsync()
+    public Task<IList<ProductItem>> GetProductsAsync()
     {
-      var list = new List<Product>
-      {
-        new Product()
-        {
-          Description = "One",
-          Id = 1,
-          Name = "One",
-          Photo = "",
-          Price = 10
-        },
-        new Product()
-        {
-          Description = "Two    ",
-          Id = 2,
-          Name = "Two",
-          Photo = "",
-          Price = 10
-        }
-      };
-
-      return Task.FromResult<IList<Product>>(list);
+      throw new NotImplementedException();
     }
 
-    public Task<Product> GetProductAsync(int productId)
+    public Task<ProductItem> GetProductAsync(int productId)
     {
       throw new NotImplementedException();
     }

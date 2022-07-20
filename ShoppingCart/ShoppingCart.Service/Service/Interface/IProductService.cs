@@ -10,7 +10,7 @@ namespace ShoppingCart.Service.Service.Interface
 {
   public interface IProductService
   {
-    Task<IList<Product>> GetProductsAsync();
-    Task<Product> GetProductAsync(int productId);
+    Task<IList<ProductItem>> GetProductsAsync();
+    Task<ProductItem> GetProductAsync(int productId);
   }
 }

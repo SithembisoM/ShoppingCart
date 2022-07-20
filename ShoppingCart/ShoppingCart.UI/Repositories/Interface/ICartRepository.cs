@@ -1,17 +1,15 @@
-﻿using ShoppingCart.UI.Models;
+﻿using ShoppingCart.Api.Models;
+using ShoppingCart.UI.Models;
 
 namespace ShoppingCart.UI.Repositories.Interface
 {
   public interface ICartRepository
   {
-    IEnumerable<CartViewModel> Get(int userId);
+    Task<IEnumerable<ItemViewModel>> Get(string userName);
 
-    void Add(
-      int productId,
-      int quantity,
-      int userId);
+    Task Add(ShoppingDetail item);
 
-    IEnumerable<ItemViewModel> Update(int basketItemId, int quantity);
+    Task<IEnumerable<ItemViewModel>> Update(int basketItemId, int quantity);
 
     IEnumerable<ItemViewModel> Delete(int basketItemId);
 

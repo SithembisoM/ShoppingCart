@@ -4,7 +4,8 @@ namespace ShoppingCart.UI.Repositories.Interface
 {
   public interface IProductRepository
   {
-    IEnumerable<ProductViewModel> GetProducts();
-    ProductViewModel GetProductById(int productId);
+    Task<IEnumerable<ProductViewModel>> GetProducts();
+
+    Task<Product> GetProductById(int productId);
   }
 }

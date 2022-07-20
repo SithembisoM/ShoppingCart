@@ -6,7 +6,7 @@
 
     public int ProductId { get; set; }
 
-    public virtual Product Product { get; set; } = new Product();
+    public virtual ProductItem ProductItem { get; set; } = new ProductItem();
 
     public int Quantity { get; set; }
 

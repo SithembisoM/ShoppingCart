@@ -1,28 +1,55 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using ShoppingCart.UI.Models;
-using ShoppingCart.UI.Repositories.Interface;
+using ShoppingCart.UI.Service.Interface;
 
 namespace ShoppingCart.UI.Controllers
 {
+  [Authorize]
   public class CartController : Controller
   {
-    private readonly ICartRepository _cartRepository;
+    private readonly ICartService _cartService;
 
-    public CartController(ICartRepository cartRepository)
+    public CartController(ICartService cartService)
     {
-      _cartRepository = cartRepository;
+      _cartService = cartService;
     }
 
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-      IEnumerable<CartViewModel> cartItems = _cartRepository.Get(1);
+      string? userName = GetCurrentUserAsync();
+
+      if (userName == null)
+      {
+        return BadRequest();
+      }
+
+      IEnumerable<ItemViewModel> cartItems = await _cartService.GetItemsAsync(userName);
+
+      if (cartItems == null)
+      {
+        throw new Exception($"No items in the cart for user : {userName}");
+      }
+
+      ViewBag.TotalAmount = cartItems.Sum(c => c.TotalAmount);
+      ViewBag.TotalCount = cartItems.Count();
+
       return View(cartItems);
     }
 
-    public ActionResult Buy(string id)
+    public ActionResult Add(int id)
     {
+      string? userName = GetCurrentUserAsync();
+
+      if (userName == null)
+      {
+        return BadRequest();
+      }
+
+      var items = _cartService.AddAsync(id, userName);
+
       return RedirectToAction("Index");
     }
 
@@ -31,9 +58,11 @@ namespace ShoppingCart.UI.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult UpdateQuantity(int ItemId, int quantity)
+    public ActionResult UpdateQuantity(int itemId, int quantity)
     {
       return RedirectToAction("Index");
     }
+
+    private string? GetCurrentUserAsync() => HttpContext.User?.Identity?.Name;
   }
 }
