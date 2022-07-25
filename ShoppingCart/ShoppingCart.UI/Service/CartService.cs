@@ -18,13 +18,13 @@ namespace ShoppingCart.UI.Service
       _productRepository = productRepository;
     }
 
-    public async Task<IEnumerable<ItemViewModel>> AddAsync(int id, string userName)
+    public async Task /*<IEnumerable<ItemViewModel>>*/ AddAsync(int id, string userName)
     {
       Product getProduct = await _productRepository.GetProductById(id);
 
       if (getProduct == null)
       {
-        return new List<ItemViewModel>();
+        return; // new List<ItemViewModel>();
       }
 
       var item = new ShoppingDetail
@@ -38,23 +38,21 @@ namespace ShoppingCart.UI.Service
       };
 
       await _cartRepository.Add(item);
-
-      return await _cartRepository.Get(userName);
     }
 
-    public Task<IEnumerable<CartItem>> QuantityAsync(int id, int quantity)
+    public async Task QuantityAsync(int id, int quantity)
     {
-      throw new NotImplementedException();
+      await _cartRepository.Update(id, quantity);
     }
 
-    public Task<IEnumerable<CartItem>> ClearAsync(int userId)
+    public Task ClearAsync(string userName)
     {
-      throw new NotImplementedException();
+      return _cartRepository.DeleteAll(userName);
     }
 
-    public Task<IEnumerable<CartItem>> DeleteByIdAsync(int id)
+    public async Task DeleteByIdAsync(int id)
     {
-      throw new NotImplementedException();
+      await _cartRepository.Delete(id);
     }
 
     public async Task<IEnumerable<ItemViewModel>> GetItemsAsync(string userName)

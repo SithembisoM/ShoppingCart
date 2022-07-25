@@ -11,7 +11,7 @@
         @foreach (ProductViewModel product in Model)
         {
             <div>
-                <div class="container" style="background-color: whitesmoke; border-radius: 5px; border-style: groove; padding: 20px; margin: 10px;">
+                <div class="container" style=" border-radius: 5px; border-style: groove; padding: 20px;">
 
                     <div class="item">
                         <div>
@@ -37,7 +37,7 @@
                     <div class="item cart" style="float: right;">
                         <div>
 
-                            <button class="add-to-cart-button" type="button" onclick="location.href = '@Url.Action("Index", "Cart")'" >
+                            <button class="add-to-cart-button" type="button" onclick="location.href = '@Url.Action("Add", "Cart", new { id = product.Id })'" >
                                 Add to Cart
                             </button>
                         </div>

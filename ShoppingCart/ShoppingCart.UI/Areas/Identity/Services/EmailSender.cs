@@ -8,6 +8,7 @@ namespace ShoppingCart.UI.Areas.Identity.Services
 {
   public class EmailSender : IEmailSender
   {
+    //taken from https://docs.microsoft.com/en-za/aspnet/core/security/authentication/accconfirm?view=aspnetcore-6.0&tabs=netcore-cli
     private readonly ILogger _logger;
 
     public AuthMessageSenderOptions Options { get; } //Set with Secret Manager.

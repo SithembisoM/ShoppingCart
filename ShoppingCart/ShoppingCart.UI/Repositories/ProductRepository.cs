@@ -67,14 +67,6 @@ namespace ShoppingCart.UI.Repositories
         return new Product();
       }
 
-      //return new ProductViewModel()
-      //{
-      //  Id = product.Id,
-      //  Name = product.Name,
-      //  Price = product.Price,
-      //  Photo = product.Photo
-      //};
-
       return product;
     }
 

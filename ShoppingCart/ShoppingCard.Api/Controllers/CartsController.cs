@@ -19,16 +19,16 @@ namespace ShoppingCart.Api.Controllers
     public IEnumerable<Shopping> GetCartItems()
     {
       List<Shopping> results = (
-        from items in _context.Product
-        join shop in _context.ShoppingDetails on items.Id equals shop.ShopId
+        from item in _context.Product
+        join shop in _context.ShoppingDetails on item.Id equals shop.ProductId
         select new Shopping
         {
           Id = shop.ShopId,
-          Name = items.Name,
-          Photo = items.Photo,
+          Name = item.Name,
+          Photo = item.Photo,
           UserName = shop.UserName,
           Quantity = shop.Qty,
-          TotalAmount = shop.TotalAmount,
+          TotalAmount = shop.Qty * item.Price,
         }).ToList();
 
       return results;

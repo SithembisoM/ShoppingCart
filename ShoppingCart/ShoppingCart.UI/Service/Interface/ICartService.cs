@@ -4,13 +4,13 @@ namespace ShoppingCart.UI.Service.Interface
 {
   public interface ICartService
   {
-    Task<IEnumerable<ItemViewModel>> AddAsync(int id, string userName);
+    Task /*<IEnumerable<ItemViewModel>>*/ AddAsync(int id, string userName);
 
-    Task<IEnumerable<CartItem>> QuantityAsync(int id, int quantity);
+    Task QuantityAsync(int id, int quantity);
 
-    Task<IEnumerable<CartItem>> ClearAsync(int userId);
+    Task ClearAsync(string userName);
 
-    Task<IEnumerable<CartItem>> DeleteByIdAsync(int id);
+    Task DeleteByIdAsync(int id);
 
     Task<IEnumerable<ItemViewModel>> GetItemsAsync(string userName);
   }

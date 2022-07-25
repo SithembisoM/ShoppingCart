@@ -61,30 +61,44 @@ namespace ShoppingCart.UI.Repositories
       response.EnsureSuccessStatusCode();
     }
 
-    public Task<IEnumerable<ItemViewModel>> Update(int itemId, int quantity)
+    public async Task Update(int id, int quantity)
     {
-            //System.Net.Http.HttpClient httpClient = GetHttpClient();
+      var httpClient = GetHttpClient();
 
-            //HttpResponseMessage response = await httpClient.PutAsJsonAsync($"api/cart/ChangeQuantity/{itemId}/{quantity}", );
+      ShoppingDetail item = null;
 
-            //if (response == null)
-            //{
-            //  return null;
-            //}
+      var response = await httpClient.GetAsync($"api/Carts/{id}");
 
-            //return ConvertToList(response);
+      if (response.IsSuccessStatusCode)
+      {
+        string responseContent = await response.Content.ReadAsStringAsync();
+        item = Convert(responseContent);
+      }
 
-            throw new NotImplementedException();
+      if (item == null)
+      {
+        return;
+      }
+
+      item.Qty = quantity;
+
+      var content = JsonContent.Create(item);
+
+      await httpClient.PutAsync($"api/carts/{id}", content);
     }
 
-    public IEnumerable<ItemViewModel> Delete(int itemId)
+    public async Task Delete(int itemId)
     {
-      throw new NotImplementedException();
+      System.Net.Http.HttpClient httpClient = GetHttpClient();
+
+      await httpClient.DeleteAsync($"api/Carts/{itemId}");
     }
 
-    public IEnumerable<ItemViewModel> DeleteAll(int userId)
+    public async Task DeleteAll(string userName)
     {
-      throw new NotImplementedException();
+      System.Net.Http.HttpClient httpClient = GetHttpClient();
+
+      await httpClient.DeleteAsync($"api/Carts");
     }
 
     private System.Net.Http.HttpClient GetHttpClient()
@@ -102,14 +116,14 @@ namespace ShoppingCart.UI.Repositories
       return JsonConvert.DeserializeObject<List<ItemViewModel>>(apiResponse, settings);
     }
 
-    private static Item? Convert(string apiResponse)
+    private static ShoppingDetail? Convert(string apiResponse)
     {
       var settings = new JsonSerializerSettings
       {
         NullValueHandling = NullValueHandling.Ignore,
         MissingMemberHandling = MissingMemberHandling.Ignore
       };
-      return JsonConvert.DeserializeObject<Item>(apiResponse, settings);
+      return JsonConvert.DeserializeObject<ShoppingDetail>(apiResponse, settings);
     }
   }
 }

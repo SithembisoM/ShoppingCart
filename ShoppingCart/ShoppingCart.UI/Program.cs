@@ -1,5 +1,3 @@
-using AutoMapper;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +13,7 @@ using ShoppingCart.UI.Service.Interface;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+string? apikey = builder.Configuration.GetSection("XApiKey").Value;
 
 builder.Services.AddDbContext<ApplicationDbContext>(
   options =>
@@ -37,26 +36,13 @@ builder.Services.AddTransient<IProductService, ProductService>();
 
 builder.Services.Configure<AuthMessageSenderOptions>(builder.Configuration);
 
-var config = new MapperConfiguration(g =>
-{
-  //g.CreateMap<Product, ProductViewModel>();
-
-  //g.CreateMap<IList<Product>, IList<ProductViewModel>>();
-
-  //g.CreateMap<IEnumerable<Product>, IEnumerable<ProductViewModel>>();
-
-  //g.CreateMap<Item, ItemViewModel>();
-  //g.CreateMap<IList<Item>, IList<ItemViewModel>>();
-});
-
-config.CreateMapper();
-
 builder.Services.AddHttpClient(
   "Product",
   httpClient =>
   {
     httpClient.BaseAddress = new Uri("http://localhost:5219/");
     httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+    httpClient.DefaultRequestHeaders.Add("XApiKey", apikey);
   });
 
 builder.Services.AddHttpClient(
@@ -65,6 +51,7 @@ builder.Services.AddHttpClient(
   {
     httpClient.BaseAddress = new Uri("http://localhost:5219/");
     httpClient.DefaultRequestHeaders.Add(HeaderNames.Accept, "application/json");
+    httpClient.DefaultRequestHeaders.Add("XApiKey", apikey);
   });
 
 WebApplication app = builder.Build();

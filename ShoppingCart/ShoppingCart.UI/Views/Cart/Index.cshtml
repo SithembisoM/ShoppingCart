@@ -4,7 +4,7 @@
     ViewData["Title"] = "Shopping Cart";
 }
 
-<h2>Shopping Cart</h2>
+<h2>Shopping Cart(@ViewBag.TotalCount)</h2>
 @if (Model != null)
 {
     <div  class="outContainer">
@@ -13,7 +13,7 @@
             @foreach (ItemViewModel item in Model)
             {
                 <div>
-                    <div class="container" style="background-color: whitesmoke; border-radius: 5px; border-style: groove; padding: 20px; margin: 10px; width: 900px">
+                    <div class="container" style="border-radius: 5px; border-style: groove; padding: 20px;width: 900px">
 
                         <div class="item">
                             <div>
@@ -34,24 +34,16 @@
                                     </h4>
                                 </div>
 
-                                <div style="height: 3rem; line-height: 1rem;">
-                                    @Html.DropDownListFor(modelItem => item.Quantity, Enumerable.Range(1, 10).Select(s => new SelectListItem
-                                    {
-                                        Text = s.ToString(),
-                                        Value = s.ToString()
-                                    }))
-                                    @Html.ActionLink("Update Quantity", "UpdateQuantity", "Cart", routeValues: new
-                                    {
-                                        Id = item.Id,
-                                        quantity = item.Quantity
-                                    }, htmlAttributes: null)
+                                <div>
+                                    @Html.DropDownListFor(modelItem => item.Quantity, Enumerable.Range(1, 10).Select(s => new SelectListItem{Text = s.ToString(),Value = s.ToString()}))
+                                    @Html.ActionLink("Update Quantity", "UpdateQuantity", "Cart", routeValues: new { id = item.Id, quantity = item.Quantity }, htmlAttributes: null)
                                 </div>
                             </div>
                         </div>
 
                         <div class="item cart" style="float: right;">
                             <div>
-                                <button class="remove-from-cart-button" type="button" onclick="location.href = '@Url.Action("Remove", "Cart")'">
+                                <button class="remove-from-cart-button" type="button" onclick="location.href = '@Url.Action("Remove", "Cart", new { id = item.Id })'">
                                     Remove
                                 </button>
                             </div>
@@ -63,7 +55,7 @@
         
         <div class="cart-item cart-summary">
             <h4 style="margin-left: 5px">Checkout: $ @ViewBag.TotalAmount</h4>
-            <button class="add-to-cart-button check-out-button" type="button" onclick="location.href = '@Url.Action("Remove", "Cart")'">
+            <button class="add-to-cart-button check-out-button" type="button" onclick="location.href = '@Url.Action("Checkout", "Cart")'">
                 Proceed to Checkout
             </button>
         </div>

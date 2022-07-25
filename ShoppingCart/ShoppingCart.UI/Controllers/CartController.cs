@@ -33,13 +33,18 @@ namespace ShoppingCart.UI.Controllers
         throw new Exception($"No items in the cart for user : {userName}");
       }
 
+      if (!cartItems.Any())
+      {
+        return RedirectToAction("Index", "Product");
+      }
+
       ViewBag.TotalAmount = cartItems.Sum(c => c.TotalAmount);
       ViewBag.TotalCount = cartItems.Count();
 
       return View(cartItems);
     }
 
-    public ActionResult Add(int id)
+    public async Task<IActionResult> Add(int id)
     {
       string? userName = GetCurrentUserAsync();
 
@@ -48,19 +53,41 @@ namespace ShoppingCart.UI.Controllers
         return BadRequest();
       }
 
-      var items = _cartService.AddAsync(id, userName);
+      await _cartService.AddAsync(id, userName);
 
       return RedirectToAction("Index");
     }
 
-    public ActionResult Remove(string id)
+    public async Task<IActionResult> Remove(int id)
     {
+      string? userName = GetCurrentUserAsync();
+
+      if (userName == null)
+      {
+        return BadRequest();
+      }
+
+      await _cartService.DeleteByIdAsync(id);
+
       return RedirectToAction("Index");
     }
 
-    public ActionResult UpdateQuantity(int itemId, int quantity)
+    public async Task<IActionResult> UpdateQuantity(int id, int quantity)
     {
+      if (quantity < 1)
+      {
+        return BadRequest();
+      }
+
+      await _cartService.QuantityAsync(id, quantity);
+
       return RedirectToAction("Index");
+    }
+
+    public ActionResult Checkout()
+    {
+      ViewBag.OrderNumber = 1;
+      return View("Checkout");
     }
 
     private string? GetCurrentUserAsync() => HttpContext.User?.Identity?.Name;

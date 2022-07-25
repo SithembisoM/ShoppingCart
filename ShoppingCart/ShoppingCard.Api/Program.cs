@@ -1,3 +1,4 @@
+using ShoppingCart.Api.Middleware;
 using ShoppingCart.Api.Models;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,8 @@ if (app.Environment.IsDevelopment())
   app.UseSwagger();
   app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ApiKeyMiddleware>();
 
 app.UseAuthorization();
 
